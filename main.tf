@@ -36,8 +36,9 @@ locals {
   sample_function_output = "${local.lambda_root}/sample_function.zip"
 
   sample_layers_source       = "${local.lambda_root}/layers"
-  sample_layers_package_json = "${local.sample_layers_source}/nodejs/package.json"
-  sample_layers_build_shell  = "${local.sample_layers_source}/nodejs/build.sh"
+  sample_layers_nodejs       = "${local.sample_layers_source}/nodejs"
+  sample_layers_package_json = "${local.sample_layers_nodejs}/package.json"
+  sample_layers_build_shell  = "build.sh"
 }
 
 resource "null_resource" "sample_layer_source_build" {
@@ -51,6 +52,7 @@ resource "null_resource" "sample_layer_source_build" {
       curl https://nodejs.org/dist/v12.19.0/node-v12.19.0-linux-x64.tar.gz | tar xz --strip-components=1 && \
       export PATH="$PWD/bin:$PATH" && \
       cd ../ && \
+      cd ${local.sample_layers_nodejs} && \
       chmod +x ${local.sample_layers_build_shell} && \
       ${local.sample_layers_build_shell}
     EOF
