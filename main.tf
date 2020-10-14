@@ -39,3 +39,26 @@ resource "aws_iam_role_policy_attachment" "aws_lambda_basic_execution_role" {
   role       = aws_iam_role.lambda.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
+locals {
+  sample_function_source = "./lambda/sample_function"
+  sample_function_output = "./lambda/sample_function.zip"
+}
+
+data "archive_file" "lambda_sample_function" {
+  type        = "zip"
+  source_dir  = local.sample_function_source
+  output_path = local.sample_function_output
+}
+
+resource "aws_lambda_function" "sample_function" {
+  filename         = data.archive_file.lambda_sample_function.output_path
+  source_code_hash = data.archive_file.lambda_sample_function.output_base64sha256
+  function_name    = "sample_function"
+  handler          = "index.handler"
+  role             = aws_iam_role.lambda.arn
+  runtime          = "nodejs12.x"
+  publish          = true
+  memory_size      = 128
+  timeout          = 3
+}
