@@ -42,7 +42,7 @@ locals {
 
 resource "null_resource" "sample_layer_source_build" {
   triggers = {
-    layer_build = filebase64sha256(local.sample_layers_source)
+    layer_build = filebase64sha256(local.sample_layers_package_json)
   }
   provisioner "local-exec" {
     working_dir = local.lambda_root
