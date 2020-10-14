@@ -99,4 +99,6 @@ resource "aws_lambda_function" "sample_function" {
   publish          = true
   memory_size      = 128
   timeout          = 3
+
+  layers = [aws_lambda_layer_version.sample_nodejs_layer.arn]
 }

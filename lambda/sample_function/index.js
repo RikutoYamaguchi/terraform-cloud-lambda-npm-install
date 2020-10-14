@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 exports.handler = () => {
-  console.log('sample')
+  console.log(moment().format('YYYY-MM-DD HH:mm:ss'))
 }
