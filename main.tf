@@ -67,7 +67,7 @@ data "archive_file" "appsync_resolver_nodejs_layer" {
 }
 
 resource "aws_lambda_layer_version" "sample_nodejs_layer" {
-  filename            = data.archive_file.appsync_resolver_nodejs_layer.output_base64sha256
+  filename            = data.archive_file.appsync_resolver_nodejs_layer.output_path
   layer_name          = "sample_nodejs_layer"
   compatible_runtimes = ["nodejs12.x"]
 }
