@@ -46,12 +46,13 @@ resource "null_resource" "sample_layer_source_build" {
     layer_build = filebase64sha256(local.sample_layers_package_json)
   }
   provisioner "local-exec" {
+    working_dir = local.lambda_root
     command     = <<-EOF
       mkdir ./node_install && \
       cd ./node_install && \
       curl https://nodejs.org/dist/v12.19.0/node-v12.19.0-linux-x64.tar.gz | tar xz --strip-components=1 && \
       export PATH="$PWD/bin:$PATH" && \
-      cd ../ && \
+      cd ../../ && \
       cd ${local.sample_layers_nodejs} && \
       chmod +x ${local.sample_layers_build_shell} && \
       ${local.sample_layers_build_shell}
