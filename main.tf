@@ -45,7 +45,6 @@ resource "null_resource" "sample_layer_source_build" {
     layer_build = filebase64sha256(local.sample_layers_package_json)
   }
   provisioner "local-exec" {
-    working_dir = local.lambda_root
     command     = <<EOF
       mkdir ./node_install && \
       cd ./node_install && \
