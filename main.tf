@@ -38,7 +38,7 @@ locals {
   sample_layers_source       = "${local.lambda_root}/layers"
   sample_layers_nodejs       = "${local.sample_layers_source}/nodejs"
   sample_layers_package_json = "${local.sample_layers_nodejs}/package.json"
-  sample_layers_build_shell  = "build.sh"
+  sample_layers_build_shell  = "./build.sh"
 }
 
 resource "null_resource" "sample_layer_source_build" {
